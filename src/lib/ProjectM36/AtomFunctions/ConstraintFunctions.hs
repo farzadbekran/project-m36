@@ -11,7 +11,6 @@ import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import qualified Data.List as L
 import qualified Text.Fuzzy as FZ
-import qualified Data.Monoid.Textual
 import qualified Data.HashSet as HS
 
 -- | Maybe Int -> Maybe Int -> Int -> Either AtomFunctionError Bool
