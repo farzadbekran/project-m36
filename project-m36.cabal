@@ -129,7 +129,8 @@ Library
                      ProjectM36.GraphRefRelationalExpr,
                      ProjectM36.NormalizeExpr,
                      ProjectM36.TransactionInfo,
-                     ProjectM36.WithNameExpr
+                     ProjectM36.WithNameExpr,
+                     ProjectM36.AtomFunctions.ConstraintFunctions
     GHC-Options: -Wall -rdynamic
     if os(windows)
       Build-Depends: Win32 >= 2.5.4.1

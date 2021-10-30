@@ -1,5 +1,6 @@
 --atom functions on primitive atom values plus the basic atom functions
 module ProjectM36.AtomFunctions.Basic where
+import ProjectM36.AtomFunctions.ConstraintFunctions
 import ProjectM36.Base
 import ProjectM36.DataTypes.Day
 import ProjectM36.DataTypes.Either
@@ -22,7 +23,8 @@ basicAtomFunctions = HS.unions [primitiveAtomFunctions,
                                 listAtomFunctions,
                                 nonEmptyListAtomFunctions,
                                 bytestringAtomFunctions,
-                                intervalAtomFunctions]
+                                intervalAtomFunctions,
+                                constraintAtomFunctions]
 
 --these special atom functions aren't scripted so they can't be serialized normally. Instead, the body remains in the binary and the serialization/deserialization happens by name only.
 precompiledAtomFunctions :: AtomFunctions
