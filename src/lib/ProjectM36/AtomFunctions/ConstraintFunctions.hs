@@ -251,9 +251,12 @@ concatTextAtoms a = Left
 fuzzySearch :: [Atom] -> Either AtomFunctionError Atom
 fuzzySearch [] = Right $ IntAtom 0
 fuzzySearch ((TextAtom searchTerm):v:_) =
-  case FZ.match searchTerm (toString v) "" "" id False of
-    Just FZ.Fuzzy { .. } -> Right $ IntAtom score
-    _ -> Right $ IntAtom 0
+  case (toString [v]) of
+    Right (TextAtom t) ->
+      case FZ.match searchTerm t "" "" id False of
+        Just FZ.Fuzzy { .. } -> Right $ IntAtom score
+        _ -> Right $ IntAtom 0
+    Left e -> Left e
 fuzzySearch
   a = Left $ AtomFunctionUserError $ "fuzzySearch: invalid case: " ++ show a
 
