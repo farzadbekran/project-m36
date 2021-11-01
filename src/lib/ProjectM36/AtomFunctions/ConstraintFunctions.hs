@@ -217,6 +217,7 @@ toString ((DateTimeAtom u):_) = Right $ TextAtom $ T.pack $ show u
 toString ((ByteStringAtom _):_) =
   Left $ AtomFunctionUserError "toString: ByteStringAtom not supported!"
 toString ((BoolAtom b):_) = Right $ TextAtom $ T.pack $ show b
+toString ((UUIDAtom u):_) = Right $ TextAtom $ T.pack $ show u
 toString ((RelationAtom _):_) =
   Left $ AtomFunctionUserError "toString: RelationAtom not supported!"
 toString ((RelationalExprAtom _):_) =
@@ -249,8 +250,8 @@ concatTextAtoms a = Left
 -- | searchTerm -> value -> Either AtomFunctionError Int
 fuzzySearch :: [Atom] -> Either AtomFunctionError Atom
 fuzzySearch [] = Right $ IntAtom 0
-fuzzySearch ((TextAtom searchTerm):(TextAtom text):_) =
-  case FZ.match searchTerm text "" "" id False of
+fuzzySearch ((TextAtom searchTerm):v:_) =
+  case FZ.match searchTerm (toString v) "" "" id False of
     Just FZ.Fuzzy { .. } -> Right $ IntAtom score
     _ -> Right $ IntAtom 0
 fuzzySearch
@@ -376,6 +377,6 @@ constraintAtomFunctions = HS.fromList
                  , atomFuncBody = AtomFunctionBody Nothing toString
                  }
   , AtomFunction { atomFuncName = "fuzzySearch"
-                 , atomFuncType = [TextAtomType, TextAtomType, IntAtomType]
+                 , atomFuncType = [TextAtomType, TypeVariableType "a", IntAtomType]
                  , atomFuncBody = AtomFunctionBody Nothing fuzzySearch
                  }]
